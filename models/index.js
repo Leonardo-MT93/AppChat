@@ -1,9 +1,11 @@
 
  const Category = require('./category');
+ const ChatMensajes = require('./chat-mensajes');
  const Role = require('./role');
  const Server = require('./server');
  const User = require('./user');
  const Product = require('./product')
+
 
 
  // 2 formas de generar importaciones de todos nuestros modelos almacenados. - La 2da es mejor, porque es mas limpio y mas fácil de leer
@@ -16,6 +18,7 @@
 
  module.exports = {
     Category,
+    ChatMensajes,
     Role,
     Server,
     User,

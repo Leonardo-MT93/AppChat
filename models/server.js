@@ -72,7 +72,8 @@ class Server {
     }
 
     sockets() {
-        this.io.on('connection', socketController)
+        this.io.on('connection', (socket) => socketController(socket, this.io)) // Ahora tenemos la referencia al socket y todo lo que contiene
+
     }
 
     //Metodo para escuchar - El server con sockets

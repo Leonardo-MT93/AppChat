@@ -1,4 +1,7 @@
-const url = "http://localhost:8080/api/auth/";
+
+const url = ( window.location.hostname.includes('localhost') )
+            ? 'http://localhost:8080/api/auth/'
+            : 'https://appchat-production-6bee.up.railway.app/';
 
 let user = null;
 let socket = null;
@@ -21,7 +24,8 @@ const validarJWT = async () => {
     throw new Error("No hay token en el servidor");
   }
 
-  const resp = await fetch(url, {
+  const resp = await fetch(url
+    , {
     headers: { "x-token": token },
   });
 

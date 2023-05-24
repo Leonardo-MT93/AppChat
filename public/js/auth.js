@@ -1,7 +1,9 @@
     const miFormulario = document.querySelector('form');
 
 
-    const url = "http://localhost:8080/api/auth/";
+    const url = ( window.location.hostname.includes('localhost') )
+    ? 'http://localhost:8080/api/auth/'
+    : 'https://appchat-production-6bee.up.railway.app/';
 
     miFormulario.addEventListener('submit', (e)=> {
         e.preventDefault();

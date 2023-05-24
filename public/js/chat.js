@@ -103,27 +103,11 @@ const dibujarMensajesPrivados = (payload) => {
   mensajesHtml+=`
     <li>
       <p>
-        <span class="text-success"> ${de}:</span>
-        <span class="fs-6 text-muted">${msg}</span>
+        <span class="text-info fw-bold"> ${de}:</span>
+        <span class="bg-info text-white p-1 rounded">${msg}</span>
       </p>
     </li>`
     ulMensajesPrivados.innerHTML = mensajesHtml;
-}
-
-function mostrarMensajes(mensajes) {
-  let mensajesHtml = '';
-
-  // Recorrer los mensajes y agregarlos al HTML
-  mensajes.forEach(({ de, msg }) => {
-    mensajesHtml+=`
-    <li>
-      <p>
-        <span class="text-success"> ${de}:</span>
-        <span class="fs-6 text-muted">${msg}</span>
-      </p>
-    </li>`
-  ulMensajes.innerHTML = mensajesHtml;
-  });
 }
 
 

@@ -35,15 +35,18 @@ const socketController = async(socket = new Socket(), io) => { //ESTO DE DECLARA
     socket.on('enviar-mensaje', ({uid, nombre,  msg}) => {
         if(uid){
             //mensaje privado
+            //*** ERROR PRINCIPAL POR EL CUAL NO SE ENCONTRABA EL ID. YO PASABA EL USER._ID PERO ESTE NO ESTABA FORMATEADO COMO UN ID ASIQUE NUNCA ENCONTRABA NADA. SOLUCION "user.id" ó "user._id.toString()" */
+            console.log(user.id);
+            console.log(user._id);
+            console.log(user._id.toString());
             // chatMensajes.enviarMensaje(user._id, user.nombre, msg)
             socket.to(uid).emit('mensaje-privado', {de: user.nombre, msg})
         }else{
             //sala global
-            chatMensajes.enviarMensaje(user._id, user.nombre, msg);
+            chatMensajes.enviarMensaje(user.id, user.nombre, msg);
             //Mnesaje a todo el mundo
             io.emit('recibir-mensajes', chatMensajes.ultimos10);
         }
-        
     })
 }
 

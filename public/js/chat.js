@@ -9,6 +9,7 @@ const txtUid = document.querySelector("#txtUid");
 const txtMensaje = document.querySelector("#txtMensaje");
 const ulUsuarios = document.querySelector("#ulUsuarios");
 const ulMensajes = document.querySelector("#ulMensajes");
+const ulMensajesPrivados = document.querySelector("#ulMensajesPrivados");
 const btnSalir = document.querySelector("#btnSalir");
 
 const validarJWT = async () => {
@@ -58,19 +59,86 @@ const conectarSocket = async() => {
     console.log('Sockets Offline');
   });
 
-  socket.on('recibir-mensajes'),
-    () => {
-      //TODO: recibir mensajes
-    };
-  socket.on('usuarios-activos'),
-    (payload) => {
-      console.log(payload);
-    };
-  socket.on('mensaje-privado'),
-    () => {
-      //TODO: mensajes privados recibidos
-    };
+  socket.on('recibir-mensajes', dibujarMensajes);
+  socket.on('usuarios-activos',dibujarUsuarios);
+  socket.on('mensaje-privado', dibujarMensajesPrivados);
 };
+
+
+const dibujarUsuarios = (usuarios =[]) => {
+  //construimos el html
+  let usersHtml = '';
+  usuarios.forEach( user => {
+    usersHtml+=`
+    <li>
+      <p>
+        <h5 class="text-success"> ${user.nombre}</h5>
+        <span class="fs-6 text-muted">${user.uid}</span>
+      </p>
+    </li>`
+  });
+  ulUsuarios.innerHTML = usersHtml;
+}
+
+
+const dibujarMensajes = (mensajes =[]) => {
+  //construimos el html
+  let mensajesHtml = '';
+  mensajes.forEach( ({nombre, mensaje}) => {
+    mensajesHtml+=`
+    <li>
+      <p>
+        <span class="text-primary"> ${nombre}:</span>
+        <span class="fs-6 text-muted">${mensaje}</span>
+      </p>
+    </li>`
+  });
+  ulMensajes.innerHTML = mensajesHtml;
+}
+
+const dibujarMensajesPrivados = (payload) => {
+  let {de, msg} = payload;
+  // construimos el html
+  let mensajesHtml = '';
+  mensajesHtml+=`
+    <li>
+      <p>
+        <span class="text-success"> ${de}:</span>
+        <span class="fs-6 text-muted">${msg}</span>
+      </p>
+    </li>`
+    ulMensajesPrivados.innerHTML = mensajesHtml;
+}
+
+function mostrarMensajes(mensajes) {
+  let mensajesHtml = '';
+
+  // Recorrer los mensajes y agregarlos al HTML
+  mensajes.forEach(({ de, msg }) => {
+    mensajesHtml+=`
+    <li>
+      <p>
+        <span class="text-success"> ${de}:</span>
+        <span class="fs-6 text-muted">${msg}</span>
+      </p>
+    </li>`
+  ulMensajes.innerHTML = mensajesHtml;
+  });
+}
+
+
+txtMensaje.addEventListener('keyup', ({keyCode}) => {
+  const msg = txtMensaje.value;
+  const uid = txtUid.value;
+  if( keyCode !== 13){return;}
+
+  if(msg.length == 0){return;}
+
+  socket.emit('enviar-mensaje', {msg, uid});
+
+  txtMensaje.value = ''
+
+})
 
 const main = async () => {
   //Tengo que validar el JWT

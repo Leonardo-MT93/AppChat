@@ -29,7 +29,7 @@ const validarJWT = async () => {
     headers: { "x-token": token },
   });
 
-  
+  console.log("0 ", resp)
   const data = await resp.json();
   const { user: userDB, token: tokenDB } = await resp.json();
 
@@ -45,7 +45,7 @@ const validarJWT = async () => {
 
     await conectarSocket();
   } catch (error) {
-    console.log(error);
+    console.log("Error en el try",error);
     window.location = "index.html";
   }
 };

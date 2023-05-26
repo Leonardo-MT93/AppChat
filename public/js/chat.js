@@ -29,6 +29,8 @@ const validarJWT = async () => {
     headers: { "x-token": token },
   });
 
+  console.log("1- ",resp)
+
   const { user: userDB, token: tokenDB } = await resp.json();
 
   // console.log(userDB, tokenDB);
@@ -54,6 +56,8 @@ const conectarSocket = async() => {
       'x-token': localStorage.getItem('token'),
     }
   });
+
+  console.log("2- ", socket)
 
   socket.on('connect', () => {
     console.log('Sockets Online');

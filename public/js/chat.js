@@ -31,7 +31,7 @@ const validarJWT = async () => {
 
   console.log("0 ", resp)
   const data = await resp.json();
-  const { user: userDB, token: tokenDB } = await resp.json();
+  const { user: userDB, token: tokenDB } = data;
 
   console.log("1- ", data)
 

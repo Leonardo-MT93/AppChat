@@ -3,7 +3,7 @@
 
     const url = ( window.location.hostname.includes('localhost') )
     ? 'http://localhost:8080/api/auth/'
-    : 'https://appchat-production-6bee.up.railway.app/';
+    : 'https://appchat-production-6bee.up.railway.app/api/auth/';
 
     miFormulario.addEventListener('submit', (e)=> {
         e.preventDefault();

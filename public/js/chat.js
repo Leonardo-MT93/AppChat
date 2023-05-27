@@ -33,17 +33,18 @@ const validarJWT = async () => {
 
   console.log(userDB, tokenDB);
   //Seteamos el token renovado
+  console.log('LLegue')
 
-  try {
-    localStorage.setItem("token", tokenDB);
-    user = userDB;
-    document.title = user.nombre;
+  // try {
+  //   localStorage.setItem("token", tokenDB);
+  //   user = userDB;
+  //   document.title = user.nombre;
 
-    await conectarSocket();
-  } catch (error) {
-    console.log("Error en el try",error);
-    window.location = "index.html";
-  }
+  //   await conectarSocket();
+  // } catch (error) {
+  //   console.log("Error en el try",error);
+  //   window.location = "index.html";
+  // }
 };
 
 const conectarSocket = async() => {

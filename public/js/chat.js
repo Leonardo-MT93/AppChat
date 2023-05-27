@@ -32,16 +32,12 @@ const validarJWT = async () => {
   console.log(resp)
 
   
-if (resp.ok) {
-  const data = await resp.json();
-  const user = data.user;
-  const token = data.token;
-  console.log(user, token)
-  // Aquí puedes usar los valores de user y token como necesites
-} else {
-  // Manejo del error si la respuesta no es exitosa
-  console.log("Hubo un error con la respuesta")
-}
+  if (resp.ok) {
+    const responseBody = await resp.text();
+    console.log(responseBody);
+  } else {
+    console.log("Hubo un error con la respuesta");
+  }
 
 //   // const { user: userDB, token: tokenDB } = await resp.json();
 //   const data = await resp.json();

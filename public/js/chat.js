@@ -31,17 +31,20 @@ const validarJWT = async () => {
 
 
   console.log(data);
-  //Seteamos el token renovado
-  try {
-    localStorage.setItem("token", tokenDB);
-    user = userDB;
-    document.title = user.nombre;
 
-    await conectarSocket();
-  } catch (error) {
-    console.log("Error en el try", error);
-    window.location = "index.html";
-  }
+console.log(JSON.parse(data));
+  
+  //Seteamos el token renovado
+  // try {
+  //   localStorage.setItem("token", tokenDB);
+  //   user = userDB;
+  //   document.title = user.nombre;
+
+  //   await conectarSocket();
+  // } catch (error) {
+  //   console.log("Error en el try", error);
+  //   window.location = "index.html";
+  // }
 };
 
 const conectarSocket = async () => {
@@ -52,8 +55,6 @@ const conectarSocket = async () => {
       "x-token": localStorage.getItem("token"),
     },
   });
-
-  console.log("2- ", socket);
 
   socket.on("connect", () => {
     console.log("Sockets Online");

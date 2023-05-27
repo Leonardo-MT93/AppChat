@@ -30,8 +30,9 @@ const validarJWT = async () => {
       , {
       headers: { "x-token": token },
     });
-  
-    const { user: userDB, token: tokenDB } = await resp.json();
+    const data = await resp.json();
+    console.log(typeof(data))
+    const { user: userDB, token: tokenDB } = data;
   
     console.log(userDB, tokenDB);
     //Seteamos el token renovado

@@ -126,6 +126,37 @@ txtMensaje.addEventListener("keyup", ({ keyCode }) => {
   txtMensaje.value = "";
 });
 
+btnSalir.onclick = () => {
+  const token = localStorage.getItem("token");
+  
+  try {
+    // Decodificar el token JWT para obtener los datos del usuario
+    const decodedToken = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
+    
+    // Acceder a la información del usuario
+    const user = decodedToken.user;
+    console.log(user);
+    
+    // Realizar acciones según los datos del usuario
+    // ...
+  } catch (error) {
+    // Manejar el error de decodificación del token
+    console.log("Error al decodificar el token:", error);
+  }
+};
+
+btnSalir.onclick = () => {
+  // Eliminar el token del almacenamiento local
+  localStorage.removeItem("token");
+  
+  // Desconectar al usuario
+  socket.disconnect();
+  
+  // Redireccionar al usuario a index.html
+  window.location.href = "index.html";
+};
+
+
 const main = async () => {
   //Tengo que validar el JWT
 

@@ -25,7 +25,7 @@ const validarJWT = async () => {
   }
 
 
-  try {
+  
     const resp = await fetch(url
       , {
       headers: { "x-token": token },
@@ -37,7 +37,7 @@ const validarJWT = async () => {
   
     console.log(userDB, tokenDB);
     //Seteamos el token renovado
-  
+    try {
     localStorage.setItem("token", tokenDB);
     user = userDB;
     document.title = user.nombre;

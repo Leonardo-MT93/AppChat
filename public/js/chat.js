@@ -1,7 +1,7 @@
 
-const url = ( window.location.hostname.includes('localhost') )
-            ? 'http://localhost:8080/api/auth/'
-            : 'https://appchat-production-6bee.up.railway.app/';
+const url = ( window.location.hostname.includes("localhost") )
+            ? "http://localhost:8080/api/auth/"
+            : "https://appchat-production-6bee.up.railway.app/";
 
 let user = null;
 let socket = null;
@@ -29,11 +29,7 @@ const validarJWT = async () => {
     headers: { "x-token": token },
   });
 
-  console.log("0 ", resp)
-  const data = await resp.json();
-  const { user: userDB, token: tokenDB } = data;
-
-  console.log("1- ", data)
+  const { user: userDB, token: tokenDB } = await resp.json();
 
   console.log(userDB, tokenDB);
   //Seteamos el token renovado
@@ -54,30 +50,30 @@ const conectarSocket = async() => {
   //Conexion con el backend
   socket = io({
     //parametros para enviar al websocket en la documentacion
-    'extraHeaders': {
-      'x-token': localStorage.getItem('token'),
+    "extraHeaders": {
+      "x-token": localStorage.getItem("token"),
     }
   });
 
   console.log("2- ", socket)
 
-  socket.on('connect', () => {
-    console.log('Sockets Online');
+  socket.on("connect", () => {
+    console.log("Sockets Online");
   });
 
-  socket.on('disconnect', () => {
-    console.log('Sockets Offline');
+  socket.on("disconnect", () => {
+    console.log("Sockets Offline");
   });
 
-  socket.on('recibir-mensajes', dibujarMensajes);
-  socket.on('usuarios-activos',dibujarUsuarios);
-  socket.on('mensaje-privado', dibujarMensajesPrivados);
+  socket.on("recibir-mensajes", dibujarMensajes);
+  socket.on("usuarios-activos",dibujarUsuarios);
+  socket.on("mensaje-privado", dibujarMensajesPrivados);
 };
 
 
 const dibujarUsuarios = (usuarios =[]) => {
   //construimos el html
-  let usersHtml = '';
+  let usersHtml = "";
   usuarios.forEach( user => {
     usersHtml+=`
     <li>
@@ -93,7 +89,7 @@ const dibujarUsuarios = (usuarios =[]) => {
 
 const dibujarMensajes = (mensajes =[]) => {
   //construimos el html
-  let mensajesHtml = '';
+  let mensajesHtml = "";
   mensajes.forEach( ({nombre, mensaje}) => {
     mensajesHtml+=`
     <li>
@@ -109,7 +105,7 @@ const dibujarMensajes = (mensajes =[]) => {
 const dibujarMensajesPrivados = (payload) => {
   let {de, msg} = payload;
   // construimos el html
-  let mensajesHtml = '';
+  let mensajesHtml = "";
   mensajesHtml+=`
     <li>
       <p>
@@ -121,16 +117,16 @@ const dibujarMensajesPrivados = (payload) => {
 }
 
 
-txtMensaje.addEventListener('keyup', ({keyCode}) => {
+txtMensaje.addEventListener("keyup", ({keyCode}) => {
   const msg = txtMensaje.value;
   const uid = txtUid.value;
   if( keyCode !== 13){return;}
 
   if(msg.length == 0){return;}
 
-  socket.emit('enviar-mensaje', {msg, uid});
+  socket.emit("enviar-mensaje", {msg, uid});
 
-  txtMensaje.value = ''
+  txtMensaje.value = ""
 
 })
 

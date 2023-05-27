@@ -17,15 +17,19 @@ const btnSalir = document.querySelector("#btnSalir");
 const validarJWT = async () => {
   //VALIDA EL JWT DEL LOCALSTORAGE
   const token = localStorage.getItem("token");
-  console.log(token)
 
   if (token == null || token.length <= 10) {
     window.location = "index.html";
     throw new Error("No hay token en el servidor");
   }
   const resp = await fetch(url, {
-    headers: { "x-token": token },
+    headers: { 
+      "Content-Type": "application/json",
+      "x-token": token, 
+    },
   });
+
+  console.log(resp)
 
   
 if (resp.ok) {

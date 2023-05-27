@@ -22,42 +22,26 @@ const validarJWT = async () => {
     window.location = "index.html";
     throw new Error("No hay token en el servidor");
   }
-  const resp = await fetch(url, {
-    headers: { 
-      "Content-Type": "application/json",
-      "x-token": token, 
-    },
-  });
+  try {
+    const resp = await fetch(url, {
+      headers: {
+        "x-token": token,
+      },
+    });
 
-  console.log(resp)
+    const { user: userDB, token: tokenDB } = await resp.json();
 
-  
-  // if (resp.ok) {
-  //   const responseBody = await resp.text();
-  //   console.log(responseBody);
-  // } else {
-  //   console.log("Hubo un error con la respuesta");
-  // }
+    // Seteamos el token renovado
 
-//   // const { user: userDB, token: tokenDB } = await resp.json();
-  const data = await resp.json();
+    localStorage.setItem("token", tokenDB);
+    user = userDB;
+    document.title = user.nombre;
 
-
-  console.log(data);
-
-// console.log(JSON.stringify(data));
-  
-  //Seteamos el token renovado
-  // try {
-  //   localStorage.setItem("token", tokenDB);
-  //   user = userDB;
-  //   document.title = user.nombre;
-
-  //   await conectarSocket();
-  // } catch (error) {
-  //   console.log("Error en el try", error);
-  //   window.location = "index.html";
-  // }
+    await conectarSocket();
+  } catch (error) {
+    console.log("Error en el try", error);
+    window.location = "index.html";
+  }
 };
 
 const conectarSocket = async () => {
